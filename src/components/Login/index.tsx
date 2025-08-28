@@ -37,17 +37,19 @@ const Login = () => {
       body: JSON.stringify(userDetails)
     }
     const response = await fetch(url, options)
-    
+        const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
+
 
     // console.log(data)
     if(response.ok===true){
-          const data = await response.json()
+          
 
       onSubmitSuccess(data.jwt_token)
     }
     else{
-      const errorData = await response.json();
-      onSubmitFailure(errorData.error_msg)
+      
+      onSubmitFailure(data.error_msg)
     }
     const jwtToken = Cookies.get('jwt_token')
     if(jwtToken!==undefined){
